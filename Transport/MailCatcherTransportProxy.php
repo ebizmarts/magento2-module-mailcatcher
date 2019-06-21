@@ -83,7 +83,7 @@ class MailCatcherTransportProxy implements TransportInterface
         return true;
     }
 
-    private function areAllRecipientsAllowed(array $recipients): bool
+    private function areAllRecipientsAllowed(array $recipients)
     {
         foreach ($recipients as $recipient) {
             if (!$this->mailCatcherRepository->isRecipientWhiteListed($recipient) &&

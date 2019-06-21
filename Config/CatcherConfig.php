@@ -27,12 +27,12 @@ class CatcherConfig
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function isCatcherEnabled() : bool
+    public function isCatcherEnabled()
     {
         return $this->scopeConfig->getValue(self::XML_PATH_ENABLED);
     }
 
-    public function whiteList() : array
+    public function whiteList()
     {
         $whiteListConfig = $this->scopeConfig->getValue(self::XML_PATH_WHITELIST);
         if ($whiteListConfig) {

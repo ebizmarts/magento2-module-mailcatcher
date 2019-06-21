@@ -23,7 +23,7 @@ class MailCatcherRepository
         $this->catcherConfig = $catcherConfig;
     }
 
-    public function isRecipientWhiteListed(string $recipient) : bool
+    public function isRecipientWhiteListed(string $recipient)
     {
         if (in_array($recipient, $this->catcherConfig->whiteList())) {
             return true;
@@ -34,7 +34,7 @@ class MailCatcherRepository
         return false;
     }
 
-    private function isRecipientDomainInWhitelist(string $recipient) : bool
+    private function isRecipientDomainInWhitelist(string $recipient)
     {
         $emailParts = explode('@', $recipient);
         $recipientDomain = array_pop($emailParts);
@@ -44,7 +44,7 @@ class MailCatcherRepository
         return false;
     }
 
-    public function isRedirectRecipient(string $recipient) : bool
+    public function isRedirectRecipient(string $recipient)
     {
         $redirectRecipient = $this->catcherConfig->redirectRecipient();
         return $recipient === $redirectRecipient;
