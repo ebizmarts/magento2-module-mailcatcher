@@ -297,7 +297,7 @@ class MailTransportTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    private function getMailTransport(array $recipients, array $cc = [], array $bcc = []): TransportInterface
+    private function getMailTransport(array $recipients, array $cc = [], array $bcc = [])
     {
         $transport = $this->transportBuilder
             ->setTemplateIdentifier(self::TEST_EMAIL_IDENTIFIER)
