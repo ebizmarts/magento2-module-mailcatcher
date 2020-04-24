@@ -56,9 +56,18 @@ class MailCatcherTransportProxy implements TransportInterface
         return $this->message;
     }
 
+    /**
+     * @return void
+     * @throws \Magento\Framework\Exception\MailException
+     */
     public function sendMessage()
     {
+        $writer = new \Laminas\Log\Writer\Stream(BP . '/var/log/test.log');
+        $logger = new \Laminas\Log\Logger();
+        $logger->addWriter($writer);
+        $logger->info('send messasge');
         if ($this->shouldCatchEmail()) {
+            $logger->info('if send messasge');
             $this->mailCatcherLogger->addInfo(
                 "Recipients: " . implode(',', $this->message->getRecipients()) . PHP_EOL .
                 "Subject: " . $this->message->getSubject() . PHP_EOL .
@@ -66,6 +75,7 @@ class MailCatcherTransportProxy implements TransportInterface
             );
             return;
         }
+        $logger->info('no if send messasge');
         return $this->originalTransport->sendMessage();
     }
 
@@ -98,7 +108,7 @@ class MailCatcherTransportProxy implements TransportInterface
     private function getBodyAsString()
     {
         $body = $this->message->getBody();
-        if ($body instanceof \Zend\Mime\Message) {
+        if ($body instanceof \Laminas\Mime\Message) {
             return $body->generateMessage();
         }
         return $body;

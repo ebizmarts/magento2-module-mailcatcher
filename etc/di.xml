@@ -11,10 +11,11 @@
     <type name="Magento\Framework\Mail\TransportInterfaceFactory">
         <plugin name="staempfli_mailcatcher_handle_mail_transport" type="Staempfli\MailCatcher\Plugin\HandleMailTransportPlugin" sortOrder="-99"/>
     </type>
-    <preference for="Magento\Framework\Mail\MessageInterface" type="Staempfli\MailCatcher\Mail\Message"/>
+<!--    <preference for="Magento\Framework\Mail\MessageInterface" type="Staempfli\MailCatcher\Mail\Message"/>-->
     <!-- A preference for "Magento\Framework\Mail\Message" it is also needed because stupid Magento is loading
         this class directly and not the Interface at Magento\Framework\Mail\Template\TransportBuilder::reset()
         See PR: https://github.com/magento/magento2/pull/11152 -->
-    <preference for="Magento\Framework\Mail\Message" type="Staempfli\MailCatcher\Mail\Message"/>
+<!--    <preference for="Magento\Framework\Mail\Message" type="Staempfli\MailCatcher\Mail\Message"/>-->
+    <preference for="Magento\Framework\Mail\EmailMessage" type="Staempfli\MailCatcher\Mail\Message"/>
 </config>
 

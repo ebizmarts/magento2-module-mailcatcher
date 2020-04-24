@@ -8,11 +8,14 @@
 
 namespace Staempfli\MailCatcher\Mail;
 
-use Ebizmarts\PosEmail\Api\MessageInterface;
+use Magento\Framework\Mail\Address;
+use Magento\Framework\Mail\AddressFactory;
+use Magento\Framework\Mail\MimeMessageInterface;
+use Magento\Framework\Mail\MimeMessageInterfaceFactory;
 use Staempfli\MailCatcher\Config\CatcherConfig;
 use Staempfli\MailCatcher\Repository\MailCatcherRepository;
 
-class Message extends \Magento\Framework\Mail\Message implements MessageInterface
+class Message extends \Magento\Framework\Mail\EmailMessage
 {
     /**
      * @var CatcherConfig
@@ -28,11 +31,21 @@ class Message extends \Magento\Framework\Mail\Message implements MessageInterfac
     public function __construct(
         CatcherConfig $catcherConfig,
         MailCatcherRepository $mailCatcherRepository,
-        $charset = 'utf-8'
+        MimeMessageInterface $body,
+        array $to,
+        MimeMessageInterfaceFactory $mimeMessageFactory,
+        AddressFactory $addressFactory,
+        ?array $from = null,
+        ?array $cc = null,
+        ?array $bcc = null,
+        ?array $replyTo = null,
+        ?Address $sender = null,
+        ?string $subject = '',
+        ?string $encoding = 'utf-8'
     ) {
         $this->catcherConfig = $catcherConfig;
         $this->mailCatcherRepository = $mailCatcherRepository;
-        parent::__construct($charset);
+        parent::__construct($body, $to, $mimeMessageFactory, $addressFactory, $from, $cc, $bcc, $replyTo, $sender, $subject, $encoding);
     }
 
     /**
@@ -58,7 +71,7 @@ class Message extends \Magento\Framework\Mail\Message implements MessageInterfac
         if ($redirectAddress) {
             $address = $redirectAddress;
         }
-        return parent::addCc($address, $name);
+        return parent::addCc($address);
     }
 
     /**
@@ -72,8 +85,6 @@ class Message extends \Magento\Framework\Mail\Message implements MessageInterfac
         }
         return parent::addBcc($address);
     }
-
-    public function createAttachment($body, $mimeType = \Zend_Mime::TYPE_OCTETSTREAM, $filename = null) { }
 
     public function getRecipients()
     {
@@ -116,16 +127,4 @@ class Message extends \Magento\Framework\Mail\Message implements MessageInterfac
         }
         return $address;
     }
-
-    /**
-     * @return $this
-     */
-    public function buildBody() { }
-
-    /**
-     * @param string $fromAddress
-     * @param null $fromName
-     * @return $this
-     */
-    public function setFromAddress($fromAddress, $fromName = null) {}
 }
