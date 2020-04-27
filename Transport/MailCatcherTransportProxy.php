@@ -13,6 +13,7 @@ use Magento\Framework\Mail\TransportInterface;
 use Staempfli\MailCatcher\Config\CatcherConfig;
 use Staempfli\MailCatcher\Logger\MailCatcherLogger;
 use Staempfli\MailCatcher\Repository\MailCatcherRepository;
+use Laminas\Mime\Message as MimeMessage;
 
 class MailCatcherTransportProxy implements TransportInterface
 {
@@ -99,8 +100,10 @@ class MailCatcherTransportProxy implements TransportInterface
     private function getBodyAsString()
     {
         $body = $this->message->getBody();
-        if ($body instanceof \Zend_Mime_Part) {
-            return $body->getContent();
+        if ($body instanceof MimeMessage) {
+            if (isset($body->getParts()[0])) {
+                return $body->getParts()[0]->getContent();
+            }
         }
         return $body;
     }
