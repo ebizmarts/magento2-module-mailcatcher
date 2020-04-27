@@ -78,13 +78,10 @@ class MailCatcherTransportProxy implements TransportInterface
      */
     public function shouldCatchEmail()
     {
-        if (!$this->catcherConfig->isCatcherEnabled()) {
-            return false;
+        if ($this->catcherConfig->isCatcherEnabled() || !$this->areAllRecipientsAllowed($this->message->getRecipients())) {
+            return true;
         }
-        if ($this->areAllRecipientsAllowed($this->message->getRecipients())) {
-            return false;
-        }
-        return true;
+        return false;
     }
 
     private function areAllRecipientsAllowed(array $recipients): bool
