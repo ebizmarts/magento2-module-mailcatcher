@@ -51,7 +51,7 @@ class Message extends \Magento\Framework\Mail\EmailMessage
     /**
      * {@inheritdoc}
      */
-    public function addTo($address, $name = '')
+    public function addTo($address) : \Magento\Framework\Mail\Message
     {
         $redirectAddress = $this->getRedirectRecipient($address);
         if ($redirectAddress) {
@@ -65,7 +65,7 @@ class Message extends \Magento\Framework\Mail\EmailMessage
     /**
      * {@inheritdoc}
      */
-    public function addCc($address, $name = '')
+    public function addCc($address) : \Magento\Framework\Mail\Message
     {
         $redirectAddress = $this->getRedirectRecipient($address);
         if ($redirectAddress) {
@@ -77,7 +77,7 @@ class Message extends \Magento\Framework\Mail\EmailMessage
     /**
      * {@inheritdoc}
      */
-    public function addBcc($address)
+    public function addBcc($address) : \Magento\Framework\Mail\Message
     {
         $redirectAddress = $this->getRedirectRecipient($address);
         if ($redirectAddress) {
